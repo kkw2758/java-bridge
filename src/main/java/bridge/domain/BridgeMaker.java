@@ -24,6 +24,7 @@ public class BridgeMaker {
         return IntStream.range(0, size)
                 .map((i) -> bridgeNumberGenerator.generate())
                 .mapToObj(BridgeStatus::findBridgeStatus)
+                .map(BridgeStatus::getStatus)
                 .collect(Collectors.toList());
     }
 }
