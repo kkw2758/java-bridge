@@ -5,19 +5,19 @@ package bridge.view;
  * 사용자에게 게임 진행 상황과 결과를 출력하는 역할을 한다.
  */
 public class OutputView {
-    public void printlnMessage(String message) {
+    public static void printlnMessage(String message) {
         System.out.println(message);
     }
 
-    public void printlnFormat(String message, Object... args) {
+    public static void printlnFormat(String message, Object... args) {
         printlnMessage(String.format(message, args));
     }
 
-    public void printFormat(String message, Object... args) {
+    public static void printFormat(String message, Object... args) {
         printMessage(String.format(message, args));
     }
 
-    public void printMessage(String message) {
+    public static void printMessage(String message) {
         System.out.print(message);
     }
 
