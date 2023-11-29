@@ -1,12 +1,12 @@
 package bridge.domain;
 
+import bridge.exception.ErrorMessage;
 import java.util.Arrays;
 
 public enum BridgeStatus {
 
     UP(1,"U"),
-    DOWN(0,"D"),
-    None(-1, "NONE");
+    DOWN(0,"D");
 
     private final int flag;
     private final String status;
@@ -24,11 +24,10 @@ public enum BridgeStatus {
         return status;
     }
 
-    public static String findBridgeStatus(int flag) {
+    public static BridgeStatus findBridgeStatus(int flag) {
         return Arrays.stream(BridgeStatus.values())
                 .filter(bridgeStatus -> bridgeStatus.getFlag() == flag)
                 .findAny()
-                .orElse(BridgeStatus.None)
-                .getStatus();
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_BRIDGE_STATUS.getMessage()));
     }
 }
