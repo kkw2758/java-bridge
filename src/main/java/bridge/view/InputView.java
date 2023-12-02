@@ -25,13 +25,13 @@ public class InputView {
 
     private void checkBlankInput(String message) {
         if (message.isBlank()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.BLANK_INPUT.getMessage());
         }
     }
 
     private void validateNumber(String userInput) {
         if (isNotNumber(userInput)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER_INPUT.getMessage());
         }
     }
 

@@ -30,4 +30,12 @@ public enum BridgeStatus {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_BRIDGE_STATUS.getMessage()));
     }
+
+    public static BridgeStatus findBridgeStatusByStatus(String status) {
+        return Arrays.stream(BridgeStatus.values())
+                .filter(bridgeStatus -> bridgeStatus.getStatus().equals(status))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_BRIDGE_STATUS.getMessage()));
+    }
+
 }

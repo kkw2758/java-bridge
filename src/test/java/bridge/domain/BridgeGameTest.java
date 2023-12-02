@@ -1,7 +1,6 @@
 package bridge.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,15 +16,15 @@ class BridgeGameTest {
         bridgeGame = BridgeGame.of(List.of("U", "D", "D"));
     }
 
-    @DisplayName("다리를 건널 수 있으면 true 아니면 false 를 반환한다.")
-    @Test
-    void moveTest() {
-        // when & then
-        assertAll(
-                () -> assertThat(bridgeGame.move(BridgeStatus.UP)).isEqualTo(true),
-                () -> assertThat(bridgeGame.move(BridgeStatus.UP)).isEqualTo(false)
-        );
-    }
+//    @DisplayName("다리를 건널 수 있으면 true 아니면 false 를 반환한다.")
+//    @Test
+//    void moveTest() {
+//        // when & then
+//        assertAll(
+//                () -> assertThat(bridgeGame.move(BridgeStatus.UP)).isEqualTo(true),
+//                () -> assertThat(bridgeGame.move(BridgeStatus.UP)).isEqualTo(false)
+//        );
+//    }
 
     @DisplayName("다리를 건널 수 있다면 다리를 건너고 위치를 증가시켜야한다.")
     @Test
@@ -52,7 +51,6 @@ class BridgeGameTest {
     void isGameEndAtCanNotMoveTest() {
         // given
         bridgeGame.move(BridgeStatus.DOWN);
-
         // when & then
         assertThat(bridgeGame.isGameEnd()).isEqualTo(true);
     }

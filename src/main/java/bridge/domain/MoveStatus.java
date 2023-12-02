@@ -3,22 +3,23 @@ package bridge.domain;
 import java.util.Arrays;
 
 public enum MoveStatus {
-    O(true),
-    X(false);
-    private final boolean status;
+    CAN_MOVE("O"),
+    CAN_NOT_MOVE("X"),
+    NONE(" ");
+    private final String status;
 
-    MoveStatus(boolean status) {
+    MoveStatus(String status) {
         this.status = status;
     }
 
-    public boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
     public static MoveStatus findMoveStatus(boolean flag) {
-        return Arrays.stream(MoveStatus.values())
-                .filter(moveStatus -> moveStatus.getStatus() == flag)
-                .findAny()
-                .get();
+        if (flag) {
+            return CAN_MOVE;
+        }
+        return CAN_NOT_MOVE;
     }
 }

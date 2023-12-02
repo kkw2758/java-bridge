@@ -12,8 +12,8 @@ class MoveStatusTest {
     void findMoveStatusTest() {
         // when & then
         assertAll(
-                () -> assertThat(MoveStatus.findMoveStatus(true)).isEqualTo(MoveStatus.O),
-                () -> assertThat(MoveStatus.findMoveStatus(false)).isEqualTo(MoveStatus.X)
+                () -> assertThat(MoveStatus.findMoveStatus(true)).isEqualTo(MoveStatus.CAN_MOVE),
+                () -> assertThat(MoveStatus.findMoveStatus(false)).isEqualTo(MoveStatus.CAN_NOT_MOVE)
         );
     }
 }
