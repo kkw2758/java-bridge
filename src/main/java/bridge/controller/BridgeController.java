@@ -3,6 +3,7 @@ package bridge.controller;
 import bridge.BridgeNumberGenerator;
 import bridge.domain.BridgeGame;
 import bridge.domain.BridgeMaker;
+import bridge.domain.BridgeSize;
 import bridge.domain.BridgeStatus;
 import bridge.domain.GameStatus;
 import bridge.view.InputView;
@@ -23,8 +24,8 @@ public class BridgeController {
 
     public void run() {
         outputView.printBridgeGameStartMessage();
-        int bridgeSize = requestBridgeSize();
-        BridgeGame bridgeGame = BridgeGame.of(new BridgeMaker(bridgeNumberGenerator).makeBridge(bridgeSize));
+        BridgeSize bridgeSize = requestBridgeSize();
+        BridgeGame bridgeGame = BridgeGame.of(new BridgeMaker(bridgeNumberGenerator).makeBridge(bridgeSize.getValue()));
         playBridgeGame(bridgeGame);
     }
 
@@ -48,9 +49,9 @@ public class BridgeController {
         }
     }
 
-    private int requestBridgeSize() {
+    private BridgeSize requestBridgeSize() {
         return retry(() -> {
-            return inputView.readBridgeSize();});
+            return BridgeSize.from(inputView.readBridgeSize());});
     }
 
     private BridgeStatus requestBridgeStatus(){
