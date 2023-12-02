@@ -6,9 +6,9 @@ import bridge.domain.BridgeMaker;
 import bridge.domain.BridgeSize;
 import bridge.domain.BridgeStatus;
 import bridge.domain.GameStatus;
+import bridge.exception.ExceptionHandler;
 import bridge.view.InputView;
 import bridge.view.OutputView;
-import java.util.function.Supplier;
 
 public class BridgeController {
 
@@ -24,7 +24,7 @@ public class BridgeController {
 
     public void run() {
         outputView.printBridgeGameStartMessage();
-        BridgeSize bridgeSize = requestBridgeSize();
+        BridgeSize bridgeSize = ExceptionHandler.handle(this::requestBridgeSize);
         BridgeGame bridgeGame = BridgeGame.of(new BridgeMaker(bridgeNumberGenerator).makeBridge(bridgeSize.getValue()));
         playBridgeGame(bridgeGame);
     }
@@ -32,7 +32,7 @@ public class BridgeController {
     private void playBridgeGame(BridgeGame bridgeGame) {
         while (true) {
             playOneRound(bridgeGame);
-            if (bridgeGame.isWin() || !GameStatus.findGameStatus(inputView.readGameCommand()).getStatus()) {
+            if (bridgeGame.isWin() || !ExceptionHandler.handle(this::requestGameStatus).getStatus()) {
                 break;
             }
             bridgeGame.retry();
@@ -42,35 +42,22 @@ public class BridgeController {
         outputView.printResult(bridgeGame.isWin(), BridgeGame.getTryCount());
     }
 
-    private void playOneRound(BridgeGame bridgeGame){
+    private void playOneRound(BridgeGame bridgeGame) {
         while (!bridgeGame.isGameEnd()) {
-            bridgeGame.move(requestBridgeStatus());
+            bridgeGame.move(ExceptionHandler.handle(this::requestBridgeStatus));
             outputView.printMap(bridgeGame.getBridgeMap());
         }
     }
 
     private BridgeSize requestBridgeSize() {
-        return retry(() -> {
-            return BridgeSize.from(inputView.readBridgeSize());});
+        return BridgeSize.from(inputView.readBridgeSize());
     }
 
-    private BridgeStatus requestBridgeStatus(){
-        return retry(() -> {
-            return BridgeStatus.findBridgeStatusByStatus(inputView.readMoving());});
+    private BridgeStatus requestBridgeStatus() {
+        return BridgeStatus.findBridgeStatusByStatus(inputView.readMoving());
     }
 
     private GameStatus requestGameStatus() {
-        return retry(() -> {
-            return GameStatus.findGameStatus(inputView.readGameCommand());});
-    }
-
-    private static <T> T retry(Supplier<T> supplier) {
-        while (true) {
-            try {
-                return supplier.get();
-            } catch (IllegalArgumentException e) {
-                OutputView.printlnMessage(e.getMessage());
-            }
-        }
+        return GameStatus.findGameStatus(inputView.readGameCommand());
     }
 }
