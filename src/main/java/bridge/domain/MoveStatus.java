@@ -1,6 +1,5 @@
 package bridge.domain;
 
-import java.util.Arrays;
 
 public enum MoveStatus {
     CAN_MOVE("O"),

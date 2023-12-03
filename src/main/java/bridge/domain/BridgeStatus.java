@@ -5,8 +5,8 @@ import java.util.Arrays;
 
 public enum BridgeStatus {
 
-    UP(1,"U"),
-    DOWN(0,"D");
+    UP(1, "U"),
+    DOWN(0, "D");
 
     private final int flag;
     private final String status;
@@ -37,5 +37,4 @@ public enum BridgeStatus {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_BRIDGE_STATUS.getMessage()));
     }
-
 }
