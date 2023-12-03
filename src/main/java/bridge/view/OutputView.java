@@ -12,6 +12,9 @@ public class OutputView {
     private static final String BRIDGE_GAME_START_MESSAGE = "다리 건너기 게임을 시작합니다.";
     private static final String RESULT_TAG = "최종 게임 결과";
     private static final String TOTAL_TRY_COUNT = "총 시도한 횟수: %d";
+    private static final String WIN_GAME_MESSAGE = "게임 성공 여부: 성공";
+    private static final String NOT_WIN_GAME_MESSAGE = "게임 성공 여부: 실패";
+
     private static final String MAP_FORMAT = "[ %s ]";
     private static final String MAP_DELIMITER = " | ";
 
@@ -51,10 +54,10 @@ public class OutputView {
 
     private void printIsWin(boolean isWin) {
         if (isWin) {
-            printlnMessage("게임 성공 여부: 성공");
+            printlnMessage(WIN_GAME_MESSAGE);
             return;
         }
-        printlnMessage("게임 성공 여부: 실패");
+        printlnMessage(NOT_WIN_GAME_MESSAGE);
     }
 
     private void printTotalTryCount(int tryCount) {
