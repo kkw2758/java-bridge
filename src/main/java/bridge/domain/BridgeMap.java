@@ -16,6 +16,12 @@ public class BridgeMap {
         initBridgeMap();
     }
 
+    public void initBridgeMap() {
+        bridgeMap.clear();
+        bridgeMap.put(BridgeStatus.UP, new ArrayList<MoveStatus>());
+        bridgeMap.put(BridgeStatus.DOWN, new ArrayList<MoveStatus>());
+    }
+
     public void addMoveStatus(BridgeStatus bridgeStatus, MoveStatus moveStatus) {
         for (BridgeStatus status : BridgeStatus.values()) {
             if (status.equals(bridgeStatus)) {
@@ -26,20 +32,17 @@ public class BridgeMap {
         }
     }
 
-    public void initBridgeMap() {
-        bridgeMap.clear();
-        bridgeMap.put(BridgeStatus.UP, new ArrayList<MoveStatus>());
-        bridgeMap.put(BridgeStatus.DOWN, new ArrayList<MoveStatus>());
+    public int calculateCanMoveCount() {
+        return (int) bridgeMap.values().stream()
+                .flatMap(Collection::stream)
+                .filter(moveStatus -> moveStatus.equals(MoveStatus.CAN_MOVE))
+                .count();
     }
 
     public boolean hasCanNotMoveStatus() {
         return bridgeMap.values().stream()
                 .flatMap(Collection::stream)
                 .anyMatch(moveStatus -> moveStatus.equals(MoveStatus.CAN_NOT_MOVE));
-    }
-
-    public int getSize() {
-        return bridgeMap.get(BridgeStatus.UP).size();
     }
 
     public MapResponse toResponse() {
@@ -53,10 +56,7 @@ public class BridgeMap {
         return new MapResponse(collect);
     }
 
-    public int calculateCanMoveCount() {
-        return (int) bridgeMap.values().stream()
-                .flatMap(Collection::stream)
-                .filter(moveStatus -> moveStatus.equals(MoveStatus.CAN_MOVE))
-                .count();
+    public int getSize() {
+        return bridgeMap.get(BridgeStatus.UP).size();
     }
 }
